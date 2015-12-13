@@ -3,6 +3,7 @@
 
 #include "path.hpp"
 
+#include <string>
 #include <vector>
 
 namespace filesystem

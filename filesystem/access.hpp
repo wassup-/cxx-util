@@ -34,8 +34,8 @@ struct filesystem_mode : std::integral_constant<filesystem_mode_e, mode> { };
 namespace users
 {
 
-constexpr static detail::filesystem_user<detail::filesystem_user_e::all> all { };
-constexpr static detail::filesystem_user<detail::filesystem_user_e::user> user { };
+constexpr static detail::filesystem_user<detail::filesystem_user_e::all>   all { };
+constexpr static detail::filesystem_user<detail::filesystem_user_e::user>  user { };
 constexpr static detail::filesystem_user<detail::filesystem_user_e::group> group { };
 constexpr static detail::filesystem_user<detail::filesystem_user_e::other> other { };
 
@@ -44,9 +44,9 @@ constexpr static detail::filesystem_user<detail::filesystem_user_e::other> other
 namespace modes
 {
 
-constexpr static detail::filesystem_mode<detail::filesystem_mode_e::none> none = { };
-constexpr static detail::filesystem_mode<detail::filesystem_mode_e::read> read = { };
-constexpr static detail::filesystem_mode<detail::filesystem_mode_e::write> write = { };
+constexpr static detail::filesystem_mode<detail::filesystem_mode_e::none>    none = { };
+constexpr static detail::filesystem_mode<detail::filesystem_mode_e::read>    read = { };
+constexpr static detail::filesystem_mode<detail::filesystem_mode_e::write>   write = { };
 constexpr static detail::filesystem_mode<detail::filesystem_mode_e::execute> execute = { };
 
 } // namespace modes

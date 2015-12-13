@@ -16,7 +16,7 @@ std::string joinpaths(const std::string& left, const std::string& right, char se
   const bool left_slash = (left.back() == separator);
   const bool right_slash = (right.front() == separator);
   if(!(left_slash || right_slash))
-    return left + "/" + right;
+    return left + std::string(separator, 1) + right;
   return left + right;
 }
 

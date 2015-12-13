@@ -2,6 +2,7 @@
 #define FILESYSTEM_EXCEPTIONS_HPP_
 
 #include <stdexcept>
+#include <string>
 
 namespace filesystem
 {
