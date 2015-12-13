@@ -1,8 +1,6 @@
 #ifndef CXX_UTIL_LBIND_HPP_
 #define CXX_UTIL_LBIND_HPP_
 
-#include <cmath>
-#include <functional>
 #include <tuple>
 #include <type_traits>
 #include <utility>
