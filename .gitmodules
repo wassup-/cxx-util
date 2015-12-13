@@ -1,0 +1,3 @@
+[submodule "lib/recursive-iterator"]
+  path = lib/recursive-iterator
+  url = git@github.com:wassup-/recursive-iterator.git
