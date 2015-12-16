@@ -130,4 +130,4 @@ auto bind(Fn &&fn, Args &&...args)
 
 } // namespace lambda
 
-#endif
+#endif // CXX_UTIL_LBIND_HPP_

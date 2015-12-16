@@ -119,4 +119,4 @@ struct static_map
   struct apply_visitor : visitor<static_map>::template visit<invoke<typename KV::key>, invoke<typename KV::value> >... { };
 };
 
-#endif
+#endif // CXX_UTIL_STATIC_MAP_HPP_

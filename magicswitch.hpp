@@ -90,4 +90,4 @@ struct command_executor
   }
 };
 
-#endif
+#endif // CXX_UTIL_MAGICSWITCH_HPP_

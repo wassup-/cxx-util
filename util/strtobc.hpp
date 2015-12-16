@@ -30,28 +30,30 @@ inline long strtobc(std::string str, bool exact = true)
 
 inline std::string bctostr(long bc, bool exact = true)
 {
+  using std::to_string;
+
   // in exact mode, if not a multiple of 1024, we assume count in bytes
   if(exact && (bc % 1024) != 0) {
     // bytes
-    return std::to_string(bc) + "b";
+    return to_string(bc) + "b";
   }
   const long times = bc / 1024;
   if(times >= (1024 * 1024 * 1024)) {
-    return std::to_string(times / (1024 * 1024 * 1024)) + "g";
+    return to_string(times / (1024 * 1024 * 1024)) + "g";
   } else if(times >= (1024 * 1024)) {
-    return std::to_string(times / (1024 * 1024)) + "g";
+    return to_string(times / (1024 * 1024)) + "g";
   } else if(times >= 1024) {
     // megabytes
-    return std::to_string(times / 1024) + "m";
+    return to_string(times / 1024) + "m";
   } else if(times > 0) {
     // kilobytes
-    return std::to_string(times) + "k";
+    return to_string(times) + "k";
   } else {
     // bytes
-    return std::to_string(times) + "b";
+    return to_string(times) + "b";
   }
 }
 
 } // namespace util
 
-#endif
+#endif // CXX_UTIL_STRTOBC_HPP_

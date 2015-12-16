@@ -84,4 +84,4 @@ inline T divroundup(T x, U y)
 
 } // namespace math
 
-#endif
+#endif // CXX_UTIL_DIVROUNDUP_HPP_

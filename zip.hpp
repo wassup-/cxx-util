@@ -195,4 +195,4 @@ zipped_range<Range...> zip(Range &&...range)
 
 } // namespace range
 
-#endif
+#endif // CXX_UTIL_ZIP_HPP_

@@ -110,4 +110,4 @@ inline static void rotate(T x, U y, V z)
 
 } // namespace ogl
 
-#endif
+#endif // CXX_UTIL_OGL_HPP_

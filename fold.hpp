@@ -55,4 +55,4 @@ AUTO_RETURNS(foldr_helper<Rest...>::fold(std::forward<First>(first)(), std::forw
 
 #undef AUTO_RETURNS
 
-#endif
+#endif // CXX_UTIL_FOLD_HPP_

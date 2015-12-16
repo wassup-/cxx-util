@@ -20,4 +20,4 @@ static std::string demangle(const char* mangled)
 
 } // namespace cxx
 
-#endif
+#endif // CXX_UTIL_DEMANGLE_HPP_
