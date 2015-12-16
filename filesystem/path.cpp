@@ -7,6 +7,7 @@ namespace filesystem
 {
 
 constexpr char basic_path::separator;
+const basic_path basic_path::invalid_path { };
 
 namespace detail
 {
@@ -24,13 +25,13 @@ std::string joinpaths(const std::string& left, const std::string& right, char se
 
 bool basic_path::is_absolute() const
 {
-  if(path_.size() < 1) return false;
+  if(path_.empty()) return false;
   return (separator == path_.front());
 }
 
 bool basic_path::is_relative() const
 {
-  if(path_.size() < 1) return false;
+  if(path_.empty()) return false;
   return (separator != path_.front());
 }
 

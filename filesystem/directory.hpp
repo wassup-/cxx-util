@@ -3,7 +3,6 @@
 
 #include "path.hpp"
 
-#include <string>
 #include <vector>
 
 namespace filesystem
@@ -12,11 +11,11 @@ namespace filesystem
 class basic_directory
 {
 public:
-  using directories_t = std::vector<std::string>;
-  using files_t = std::vector<std::string>;
+  using directories_t = std::vector<basic_path>;
+  using files_t = std::vector<basic_path>;
 
 public:
-  basic_directory(std::string filename) : path_(filename) { }
+  basic_directory(basic_path filename) : path_(filename) { }
 
   const basic_path& path() const { return path_; }
 

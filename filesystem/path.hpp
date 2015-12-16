@@ -9,7 +9,8 @@ namespace filesystem
 class basic_path
 {
 public:
-  constexpr static char separator = '/';
+  constexpr static char separator { '/' };
+  const static basic_path invalid_path;
 
 public:
   basic_path()

@@ -9,14 +9,13 @@
 #include <algorithm>
 #include <iterator>
 #include <memory>
+#include <string>
 
 namespace filesystem
 {
 
 namespace detail
 {
-
-const static basic_path invalid_path{};
 
 bool filter_directories(const basic_path& directory, struct dirent* ent)
 {
@@ -52,17 +51,17 @@ bool filter_files(const basic_path& directory, struct dirent* ent)
 
 template<bool(*Filter)(const basic_path&, struct dirent*)>
 struct basic_directory_iterator
-: std::iterator<std::input_iterator_tag, std::string>
+: std::iterator<std::input_iterator_tag, basic_path>
 {
 public:
   basic_directory_iterator()
   : dir_(NULL)
   , ptr_(NULL)
-  , directory_(detail::invalid_path)
+  , directory_(basic_path::invalid_path)
   { }
 
-  basic_directory_iterator(const std::string& directory)
-  : dir_(::opendir(directory.c_str()), &::closedir)
+  basic_directory_iterator(const basic_path &directory)
+  : dir_(::opendir(static_cast<std::string>(directory).c_str()), &::closedir)
   , ptr_(&ent_)
   , directory_(directory)
   {
@@ -72,7 +71,7 @@ public:
   basic_directory_iterator operator++(int)
   {
     basic_directory_iterator copy = *this;
-    ++*this;
+    increment();
     return copy;
   }
 
@@ -82,7 +81,7 @@ public:
     return *this;
   }
 
-  std::string operator*() const
+  basic_path operator*() const
   {
     return basic_path::join(directory_, ent_.d_name);
   }
