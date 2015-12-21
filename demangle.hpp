@@ -1,6 +1,10 @@
 #ifndef CXX_UTIL_DEMANGLE_HPP_
 #define CXX_UTIL_DEMANGLE_HPP_
 
+/**
+ * source: http://stackoverflow.com/a/4541470/840382
+ */
+
 #include <cstdlib>
 #include <cxxabi.h>
 #include <string>
@@ -8,7 +12,7 @@
 namespace cxx
 {
 
-static std::string demangle(const char* mangled)
+static std::string demangle(const char *mangled)
 {
     int status = -4; // some arbitrary value to eliminate the compiler warning
     std::string ret;

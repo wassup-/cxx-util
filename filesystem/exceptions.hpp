@@ -7,27 +7,27 @@
 namespace filesystem
 {
 
-struct filesystem_exception : std::runtime_error
+struct exception : std::runtime_error
 {
   using std::runtime_error::runtime_error;
 };
 
-struct filesystem_access_exception : filesystem_exception
+struct access_exception : exception
 {
-  using filesystem_exception::filesystem_exception;
+  using exception::exception;
 };
 
-struct file_not_found_exception : filesystem_exception
+struct file_not_found_exception : exception
 {
   file_not_found_exception(const std::string &path)
-  : filesystem_exception("File " + path + " not found")
+  : exception("File " + path + " not found")
   { }
 };
 
-struct directory_not_found_exception : filesystem_exception
+struct directory_not_found_exception : exception
 {
   directory_not_found_exception(const std::string &path)
-  : filesystem_exception("Directory " + path + " not found")
+  : exception("Directory " + path + " not found")
   { }
 };
 

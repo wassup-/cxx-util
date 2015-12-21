@@ -1,6 +1,10 @@
 #ifndef CXX_UTIL_MAGICSWITCH_HPP_
 #define CXX_UTIL_MAGICSWITCH_HPP_
 
+/**
+ * source: http://stackoverflow.com/a/33613901/840382
+ */
+
 #include <type_traits>
 #include <utility>
 #include <vector>

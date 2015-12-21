@@ -3,10 +3,14 @@
 
 #include <utility>
 
+namespace functional
+{
+
 #define AUTO_RETURNS(x) -> decltype(x) { return x; }
 
 /*
  * foldl
+ * eg [e, f, g] => e(f(g()))
  */
 template<typename H, typename...>
 struct foldl_helper
@@ -30,6 +34,7 @@ AUTO_RETURNS((foldl_helper<First, Rest...>::fold(std::forward<First>(first), std
 
 /*
  * foldr
+ * eg [e, f, g] => g(f(e()))
  */
 template<typename H, typename...>
 struct foldr_helper
@@ -54,5 +59,7 @@ auto foldr(First&& first, Rest&&... rest)
 AUTO_RETURNS(foldr_helper<Rest...>::fold(std::forward<First>(first)(), std::forward<Rest>(rest)...));
 
 #undef AUTO_RETURNS
+
+} // namespace functional
 
 #endif // CXX_UTIL_FOLD_HPP_

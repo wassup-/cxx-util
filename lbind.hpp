@@ -108,6 +108,12 @@ namespace placeholders
 constexpr static auto _1 = detail::placeholder<1>{};
 constexpr static auto _2 = detail::placeholder<2>{};
 constexpr static auto _3 = detail::placeholder<3>{};
+constexpr static auto _4 = detail::placeholder<4>{};
+constexpr static auto _5 = detail::placeholder<5>{};
+constexpr static auto _6 = detail::placeholder<6>{};
+constexpr static auto _7 = detail::placeholder<7>{};
+constexpr static auto _8 = detail::placeholder<8>{};
+constexpr static auto _9 = detail::placeholder<9>{};
 
 } // namespace placeholders
 

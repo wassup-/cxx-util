@@ -1,6 +1,8 @@
 #ifndef FILESYSTEM_PATH_HPP_
 #define FILESYSTEM_PATH_HPP_
 
+#include "config.hpp"
+
 #include <string>
 
 namespace filesystem
@@ -9,7 +11,11 @@ namespace filesystem
 class basic_path
 {
 public:
+#ifdef CXXU_SYSTEM_WINDOWS
+  constexpr static char separator { '\\' };
+#else
   constexpr static char separator { '/' };
+#endif
   const static basic_path invalid_path;
 
 public:
