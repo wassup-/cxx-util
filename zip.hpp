@@ -1,6 +1,8 @@
 #ifndef CXX_UTIL_ZIP_HPP_
 #define CXX_UTIL_ZIP_HPP_
 
+#include "mpl.hpp"
+
 #include <iterator>
 #include <tuple>
 #include <type_traits>
@@ -67,23 +69,22 @@ struct common_iterator_category<Tag> { using type = Tag; };
 template<typename Tag1, typename Tag2, typename ...Tag>
 struct common_iterator_category<Tag1, Tag2, Tag...>
 {
+protected:
+  template<typename T>
+  struct seq_has
+  {
+    template<typename U>
+    using apply = typename T::template has<U>;
+  };
+
   using seq = type_sequence<Tag1, Tag2>;
-  using common_tag =  std::conditional_t<
-                        seq::template has<std::input_iterator_tag>::value,
-                        std::input_iterator_tag,
-                        std::conditional_t<
-                          seq::template has<std::output_iterator_tag>::value,
-                          std::output_iterator_tag,
-                          std::conditional_t<
-                            seq::template has<std::forward_iterator_tag>::value,
-                            std::forward_iterator_tag,
-                            std::conditional_t<
-                              seq::template has<std::bidirectional_iterator_tag>::value,
-                              std::bidirectional_iterator_tag,
-                              std::conditional_t<
-                                seq::template has<std::random_access_iterator_tag>::value,
-                                std::random_access_iterator_tag,
-                                void> > > > >;
+  using common_tag = typename mpl::find_first<seq_has, seq, std::input_iterator_tag,
+                                                            std::output_iterator_tag,
+                                                            std::forward_iterator_tag,
+                                                            std::bidirectional_iterator_tag,
+                                                            std::random_access_iterator_tag>::type;
+
+public:
   using type = typename common_iterator_category<common_tag, Tag...>::type;
 };
 
