@@ -21,6 +21,6 @@ struct find_first<Pred, T, U, V...>
                   typename find_first<Pred, T, V...>::type>;
 };
 
-}
+} // namespace mpl
 
 #endif // CXX_UTIL_MPL_HPP_

@@ -1,6 +1,8 @@
 #ifndef CXX_UTIL_STRTOBC_HPP_
 #define CXX_UTIL_STRTOBC_HPP_
 
+#include <string>
+
 namespace util
 {
 

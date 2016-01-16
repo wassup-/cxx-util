@@ -3,7 +3,6 @@
 
 #include "path.hpp"
 
-#include <string>
 #include <vector>
 
 namespace filesystem
@@ -12,7 +11,7 @@ namespace filesystem
 class basic_file
 {
 public:
-  basic_file(std::string filename) : path_(filename) { }
+  basic_file(basic_path filename) : path_(filename) { }
 
   const basic_path& path() const { return path_; }
 

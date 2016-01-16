@@ -1,6 +1,10 @@
 #ifndef CXX_UTIL_MEMORY_OBSERVERPTR_
 #define CXX_UTIL_MEMORY_OBSERVERPTR_
 
+/*
+ * Source: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3840.pdf
+ */
+
 #include <iterator>
 #include <functional>
 #include <type_traits>
@@ -27,22 +31,28 @@ public:
 public:
   constexpr observer_ptr() noexcept : ptr_ { nullptr } { }
   constexpr observer_ptr(std::nullptr_t) noexcept : ptr_ { nullptr } { }
-  observer_ptr(pointer ptr) noexcept : ptr_{ ptr } { }
+  explicit observer_ptr(pointer ptr) noexcept : ptr_{ ptr } { }
 
   template<typename U, typename = typename std::enable_if<std::is_base_of<T, U>::value>::type>
-  observer_ptr(U *ptr) noexcept : ptr_{ ptr } { }
+  explicit observer_ptr(U *ptr) noexcept : ptr_{ ptr } { }
+
+  template<typename U, typename = typename std::enable_if<std::is_base_of<T, U>::value>::type>
+  observer_ptr(const observer_ptr<U> &other) : observer_ptr(other.get()) { }
 
   observer_ptr(const observer_ptr&) = default;
   observer_ptr(observer_ptr&&) = default;
 
+  observer_ptr& operator=(std::nullptr_t) noexcept { ptr_ = nullptr; return *this; }
   observer_ptr& operator=(pointer ptr) noexcept { ptr_ = ptr; return *this; }
   template<typename U, typename = typename std::enable_if<std::is_base_of<T, U>::value>::type>
   observer_ptr& operator=(U *ptr) noexcept { ptr_ = ptr; return *this; }
+  template<typename U, typename = typename std::enable_if<std::is_base_of<T, U>::value>::type>
+  observer_ptr& operator=(const observer_ptr<U> &ptr) noexcept { return (*this = ptr.get()); }
 
   // observers
   pointer get() const noexcept { return ptr_; }
-  pointer operator->() const noexcept { return ptr_; }
-  reference operator*() const noexcept { return *ptr_; }
+  pointer operator->() const noexcept { return get(); }
+  reference operator*() const noexcept { return *get(); }
   explicit operator bool() const noexcept { return static_cast<bool>(ptr_); }
 
   // conversions
@@ -76,22 +86,28 @@ public:
 public:
   constexpr observer_ptr() noexcept : ptr_ { nullptr } { }
   constexpr observer_ptr(std::nullptr_t) noexcept : ptr_ { nullptr } { }
-  observer_ptr(pointer ptr) noexcept : ptr_{ ptr } { }
+  explicit observer_ptr(pointer ptr) noexcept : ptr_{ ptr } { }
 
   template<typename U, typename = typename std::enable_if<std::is_base_of<T, U>::value>::type>
-  observer_ptr(U *ptr) noexcept : ptr_{ ptr } { }
+  explicit observer_ptr(U *ptr) noexcept : ptr_{ ptr } { }
+
+  template<typename U, typename = typename std::enable_if<std::is_base_of<T, U>::value>::type>
+  observer_ptr(const observer_ptr<U> &other) : observer_ptr(other.get()) { }
 
   observer_ptr(const observer_ptr&) = default;
   observer_ptr(observer_ptr&&) = default;
 
+  observer_ptr& operator=(std::nullptr_t) noexcept { ptr_ = nullptr; return *this; }
   observer_ptr& operator=(pointer ptr) noexcept { ptr_ = ptr; return *this; }
   template<typename U, typename = typename std::enable_if<std::is_base_of<T, U>::value>::type>
   observer_ptr& operator=(U *ptr) noexcept { ptr_ = ptr; return *this; }
+  template<typename U, typename = typename std::enable_if<std::is_base_of<T, U>::value>::type>
+  observer_ptr& operator=(const observer_ptr<U> &ptr) noexcept { return (*this = ptr.get()); }
 
   // observers
   pointer get() const noexcept { return ptr_; }
-  pointer operator->() const noexcept { return ptr_; }
-  reference operator*() const noexcept { return *ptr_; }
+  pointer operator->() const noexcept { return get(); }
+  reference operator*() const noexcept { return *get(); }
   explicit operator bool() const noexcept { return static_cast<bool>(ptr_); }
 
   // conversions
@@ -168,25 +184,29 @@ void swap(observer_ptr<T> &left, observer_ptr<T> &right) { left.swap(right); }
 template<typename T>
 observer_ptr<T> make_observer(T *ptr) { return { ptr }; }
 
-template<typename T, typename U, typename = typename std::enable_if<std::is_base_of<T, U>::value>::type>
-observer_ptr<T> static_pointer_cast(const observer_ptr<U> &ptr)
+template<typename T, typename U>
+observer_ptr<T> static_pointer_cast(const observer_ptr<U> &optr)
 {
   using pointer = typename std::add_pointer<T>::type;
-  return { static_cast<pointer>(ptr.get()) };
+  pointer ptr = static_cast<pointer>(optr.get());
+  return { ptr };
 }
 
-template<typename T, typename U, typename = typename std::enable_if<std::is_base_of<T, U>::value>::type>
-observer_ptr<T> dynamic_pointer_cast(const observer_ptr<U> &ptr)
+template<typename T, typename U>
+observer_ptr<T> dynamic_pointer_cast(const observer_ptr<U> &optr)
 {
   using pointer = typename std::add_pointer<T>::type;
-  return { dynamic_cast<pointer>(ptr.get()) };
+  pointer ptr = dynamic_cast<pointer>(optr.get());
+  if(ptr) return { ptr };
+  else return { nullptr };
 }
 
-template<typename T, typename U, typename = typename std::enable_if<std::is_base_of<T, U>::value>::type>
-observer_ptr<T> const_pointer_cast(const observer_ptr<U> &ptr)
+template<typename T, typename U>
+observer_ptr<T> const_pointer_cast(const observer_ptr<U> &optr)
 {
   using pointer = typename std::add_pointer<T>::type;
-  return { const_cast<pointer>(ptr.get()) };
+  pointer ptr = const_cast<pointer>(optr.get());
+  return { ptr };
 }
 
 } // namespace cxx

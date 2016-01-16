@@ -1,7 +1,7 @@
 #ifndef FILESYSTEM_PATH_HPP_
 #define FILESYSTEM_PATH_HPP_
 
-#include "config.hpp"
+#include "../config.hpp"
 
 #include <string>
 
@@ -23,14 +23,14 @@ public:
   : path_()
   { }
 
-  basic_path(std::string p)
+  explicit basic_path(std::string p)
   : path_(p)
   { }
 
   bool is_absolute() const;
   bool is_relative() const;
 
-  operator std::string() const;
+  explicit operator std::string() const;
 
   std::string directory() const;
   std::string extension() const;

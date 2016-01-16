@@ -9,7 +9,7 @@ namespace crtp
 {
 
 template<typename Value>
-struct explicit_caster
+struct static_caster
 {
   template<typename Class>
   static Value cast(const Class& c)
@@ -18,7 +18,7 @@ struct explicit_caster
 
 template<typename Derived,
          typename Value,
-         typename Caster = explicit_caster<Value> >
+         typename Caster = static_caster<Value> >
 struct ctrp_ops
 {
 private:
