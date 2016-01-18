@@ -16,12 +16,12 @@ using concrete = invoke<C<T...>>;
 template<typename K,
          typename V,
          template<typename> class transform = identity>
-struct key_value
+struct static_kv
 {
   using key = transform<K>;
   using value = transform<V>;
 
-  using inverse = key_value<V, K, transform>;
+  using inverse = static_kv<V, K, transform>;
 
   using storage = std::pair<invoke<key>, invoke<value> >;
 };

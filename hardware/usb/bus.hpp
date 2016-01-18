@@ -18,10 +18,10 @@ public:
     typedef basic_bus this_type;
 
 public:
-    basic_bus(std::string const & /* name */, std::string const & /* path */);
+    basic_bus(const std::string& /* name */, const std::string& /* path */);
     ~basic_bus();
 
-    std::string const & name() const;
+    const std::string& name() const;
     std::string path() const;
 
     std::vector<basic_device> devices() const;

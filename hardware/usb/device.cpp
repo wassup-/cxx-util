@@ -9,18 +9,18 @@ namespace hardware
 namespace usb
 {
 
-basic_device::basic_device(basic_bus const * b, std::string const & p)
+basic_device::basic_device(const basic_bus *b, const std::string &p)
 : m_bus(b), m_path(p)
 { }
 
 basic_device::~basic_device()
 { }
 
-basic_bus const & basic_device::bus() const {
+const basic_bus& basic_device::bus() const {
     return *m_bus;
 }
 
-std::string const & basic_device::name() const {
+const std::string& basic_device::name() const {
     return m_path;
 }
 
