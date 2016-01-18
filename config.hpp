@@ -54,7 +54,7 @@
   #define CXXU_SYSTEM_FREEBSD
 #else
   // Unsupported system
-  #error This operating system is unsupported by typesafe-db
+  #error This operating system is unsupported
 #endif
 
 #if defined(__GNUC__)
