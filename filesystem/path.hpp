@@ -4,6 +4,7 @@
 #include "../config.hpp"
 
 #include <string>
+#include <utility>
 
 namespace filesystem
 {
@@ -24,7 +25,7 @@ public:
   { }
 
   explicit basic_path(std::string p)
-  : path_(p)
+  : path_(std::move(p))
   { }
 
   bool is_absolute() const;

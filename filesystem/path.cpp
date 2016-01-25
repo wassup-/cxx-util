@@ -12,7 +12,7 @@ const basic_path basic_path::invalid_path { };
 namespace detail
 {
 
-std::string joinpaths(const std::string& left, const std::string& right, char separator)
+std::string joinpaths(const std::string &left, const std::string &right, char separator)
 {
   const bool left_slash = (left.back() == separator);
   const bool right_slash = (right.front() == separator);
@@ -65,12 +65,12 @@ basic_path::operator std::string() const
   return path_;
 }
 
-basic_path basic_path::join(const basic_path& l, const basic_path& r)
+basic_path basic_path::join(const basic_path &l, const basic_path &r)
 {
   return { detail::joinpaths(l.path_, r.path_, separator) };
 }
 
-basic_path basic_path::join(const basic_path& l, std::string r)
+basic_path basic_path::join(const basic_path &l, std::string r)
 {
   return { detail::joinpaths(l.path_, r, separator) };
 }

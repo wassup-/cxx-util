@@ -50,8 +50,8 @@ struct foldr_helper<First, Second, Rest...>
   using next_folder = foldr_helper<Second, Rest...>;
 
   template<typename State>
-  static auto fold(State s, First first, Second second, Rest... rest)
-  AUTO_RETURNS(next_folder::fold(first(s), second, rest...));
+  static auto fold(State &&s, First first, Second second, Rest... rest)
+  AUTO_RETURNS(next_folder::fold(first(std::forward<State>(s)), second, rest...));
 };
 
 template<typename First, typename... Rest>
