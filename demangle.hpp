@@ -8,6 +8,7 @@
 #if defined(__GNUG__)
   #include <cstdlib>
   #include <cxxabi.h>
+  #include <memory>
 #endif
 #include <string>
 

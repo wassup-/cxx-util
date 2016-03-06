@@ -37,7 +37,7 @@ template<filesystem_mode_e mode>
 struct filesystem_mode : std::integral_constant<filesystem_mode_e, mode>
 {
   template<filesystem_mode_e other_mode>
-  filesystem_mode<(mode | other_mode)> operator|(filesystem_mode<other_mode>) { return { }; }
+  constexpr filesystem_mode<(mode | other_mode)> operator|(filesystem_mode<other_mode>) { return { }; }
 };
 
 } // namespace detail

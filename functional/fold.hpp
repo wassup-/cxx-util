@@ -10,53 +10,41 @@ namespace functional
 
 /*
  * foldl
- * eg [e, f, g] => e(f(g()))
+ * eg [e, f, g] => g(f(e()))
  */
-template<typename H, typename...>
 struct foldl_helper
 {
-  static auto fold(H fn)
-  AUTO_RETURNS(fn());
-};
+  template<typename State, typename Fn>
+  static auto fold(State &&s, Fn &&fn)
+  AUTO_RETURNS(std::forward<Fn>(fn)(std::forward<State>(s)));
 
-template<typename First, typename Second, typename... Rest>
-struct foldl_helper<First, Second, Rest...>
-{
-  using next_folder = foldl_helper<Second, Rest...>;
-
-  static auto fold(First first, Second second, Rest... rest)
-  AUTO_RETURNS(first(next_folder::fold(second, rest...)));
+  template<typename State, typename Fn, typename ...Rest>
+  static auto fold(State &&s, Fn &&fn, Rest &&...rest)
+  AUTO_RETURNS(fold(fold(std::forward<State>(s), std::forward<Fn>(fn)), std::forward<Rest>(rest)...));
 };
 
 template<typename First, typename... Rest>
 auto foldl(First&& first, Rest&&... rest)
-AUTO_RETURNS((foldl_helper<First, Rest...>::fold(std::forward<First>(first), std::forward<Rest>(rest)...)));
+AUTO_RETURNS(foldl_helper::fold(std::forward<First>(first)(), std::forward<Rest>(rest)...));
 
 /*
  * foldr
- * eg [e, f, g] => g(f(e()))
+ * eg [e, f, g] => e(f(g()))
  */
-template<typename H, typename...>
 struct foldr_helper
 {
-  template<typename State>
-  static auto fold(State s, H fn)
-  AUTO_RETURNS(fn(s));
-};
+  template<typename Fn>
+  static auto fold(Fn &&fn)
+  AUTO_RETURNS(std::forward<Fn>(fn)());
 
-template<typename First, typename Second, typename... Rest>
-struct foldr_helper<First, Second, Rest...>
-{
-  using next_folder = foldr_helper<Second, Rest...>;
-
-  template<typename State>
-  static auto fold(State &&s, First first, Second second, Rest... rest)
-  AUTO_RETURNS(next_folder::fold(first(std::forward<State>(s)), second, rest...));
+  template<typename Fn, typename ...Rest>
+  static auto fold(Fn &&fn, Rest &&...rest)
+  AUTO_RETURNS(std::forward<Fn>(fn)(fold(std::forward<Rest>(rest)...)));
 };
 
 template<typename First, typename... Rest>
 auto foldr(First&& first, Rest&&... rest)
-AUTO_RETURNS(foldr_helper<Rest...>::fold(std::forward<First>(first)(), std::forward<Rest>(rest)...));
+AUTO_RETURNS(foldr_helper::fold(std::forward<First>(first), std::forward<Rest>(rest)...));
 
 #undef AUTO_RETURNS
 

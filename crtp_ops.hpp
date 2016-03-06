@@ -29,52 +29,37 @@ private:
   }
 
 public:
-  friend bool operator==(const ctrp_ops &l, const ctrp_ops &r)
-  {
-    return (extract_value(l) == extract_value(r));
-  }
-
   friend bool operator==(const ctrp_ops &l, Value r)
-  {
-    return (extract_value(l) == r);
-  }
+  { return (extract_value(l) == r); }
 
   friend bool operator==(Value l, const ctrp_ops &r)
-  {
-    return (l == extract_value(r));
-  }
+  { return (l == extract_value(r)); }
 
 #if defined(CRTP_OPS_RECURSE)
   template<typename ODerived, typename OValue, typename OCaster>
   friend bool operator==(const ctrp_ops &l, const ctrp_ops<ODerived, OValue, OCaster> &r)
   { return (extract_value(l) == extract_value(r)); }
+#else
+  friend bool operator==(const ctrp_ops &l, const ctrp_ops &r)
+  { return (extract_value(l) == extract_value(r)); }
 #endif
 
-  friend bool operator<(const ctrp_ops &l, const ctrp_ops &r)
-  {
-    return (extract_value(l) < extract_value(r));
-  }
-
   friend bool operator<(const ctrp_ops &l, Value r)
-  {
-    return (extract_value(l) < r);
-  }
+  { return (extract_value(l) < r); }
 
   friend bool operator<(Value l, const ctrp_ops &r)
-  {
-    return (l < extract_value(r));
-  }
+  { return (l < extract_value(r)); }
 
 #if defined(CRTP_OPS_RECURSE)
   template<typename ODerived, typename OValue, typename OCaster>
   friend bool operator<(const ctrp_ops &l, const ctrp_ops<ODerived, OValue, OCaster> &r)
   { return (extract_value(l) < extract_value(r)); }
+#else
+  friend bool operator<(const ctrp_ops &l, const ctrp_ops &r)
+  { return (extract_value(l) < extract_value(r)); }
 #endif
 
   // Relative operators (based on std::rel_ops)
-
-  friend bool operator!=(const ctrp_ops &l, const ctrp_ops &r)
-  { return !(l == r); }
 
   friend bool operator!=(const ctrp_ops &l, Value r)
   { return !(l == r); }
@@ -86,10 +71,10 @@ public:
   template<typename ODerived, typename OValue, typename OCaster>
   friend bool operator!=(const ctrp_ops &l, const ctrp_ops<ODerived, OValue, OCaster> &r)
   { return (l != extract_value(r)); }
+#else
+  friend bool operator!=(const ctrp_ops &l, const ctrp_ops &r)
+  { return !(l == r); }
 #endif
-
-  friend bool operator>(const ctrp_ops &l, const ctrp_ops &r)
-  { return (r < l); }
 
   friend bool operator>(const ctrp_ops &l, Value r)
   { return (r < l); }
@@ -101,10 +86,10 @@ public:
   template<typename ODerived, typename OValue, typename OCaster>
   friend bool operator>(const ctrp_ops &l, const ctrp_ops<ODerived, OValue, OCaster> &r)
   { return (l > extract_value(r)); }
+#else
+  friend bool operator>(const ctrp_ops &l, const ctrp_ops &r)
+  { return (r < l); }
 #endif
-
-  friend bool operator<=(const ctrp_ops &l, const ctrp_ops &r)
-  { return !(r < l); }
 
   friend bool operator<=(const ctrp_ops &l, Value r)
   { return !(r < l); }
@@ -116,10 +101,10 @@ public:
   template<typename ODerived, typename OValue, typename OCaster>
   friend bool operator<=(const ctrp_ops &l, const ctrp_ops<ODerived, OValue, OCaster> &r)
   { return (l <= extract_value(r)); }
+#else
+  friend bool operator<=(const ctrp_ops &l, const ctrp_ops &r)
+  { return !(r < l); }
 #endif
-
-  friend bool operator>=(const ctrp_ops &l, const ctrp_ops &r)
-  { return !(l < r); }
 
   friend bool operator>=(const ctrp_ops &l, Value r)
   { return !(l < r); }
@@ -131,6 +116,9 @@ public:
   template<typename ODerived, typename OValue, typename OCaster>
   friend bool operator>=(const ctrp_ops &l, const ctrp_ops<ODerived, OValue, OCaster> &r)
   { return (l >= extract_value(r)); }
+#else
+  friend bool operator>=(const ctrp_ops &l, const ctrp_ops &r)
+  { return !(l < r); }
 #endif
 };
 

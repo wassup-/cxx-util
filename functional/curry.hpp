@@ -2,7 +2,7 @@
 #define CXX_UTIL_CURRY_HPP_
 
 /**
- * source: http://stackoverflow.com/a/26661936/840382
+ * source: https://stackoverflow.com/a/26661936/840382
  */
 
 #include <type_traits>

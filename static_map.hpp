@@ -115,6 +115,17 @@ struct static_map
   template<typename Key>
   using value_for = invoke<detail::type_for<Key, KV...> >;
 
+  /**
+   * Apply a static visitor
+   *
+   * template<typename Map>
+   * struct visitor
+   * {
+   *   template<typename Key, typename Value>
+   *   static void visit();
+   * };
+   *
+   */
   template<template<typename> class visitor>
   struct apply_visitor : visitor<static_map>::template visit<invoke<typename KV::key>, invoke<typename KV::value> >... { };
 };
