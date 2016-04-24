@@ -9,16 +9,16 @@ namespace meta
 {
 
 template<typename T>
-using type_t = typename T::type;
+using invoke = typename T::type;
 
 template<typename T, typename U>
-using apply_t = type_t<typename U::template apply<T> >;
+using apply = invoke<typename U::template apply<T> >;
 
 template<template<typename> class T>
 struct quote
 {
   template<typename U>
-  struct apply { using type = type_t<T<U>>; };
+  struct apply { using type = invoke<T<U>>; };
 };
 
 template<typename... T>
@@ -28,22 +28,22 @@ private:
   template<typename U, typename F, typename... B>
   struct compose_impl
   {
-    using inner = type_t<compose_impl<U, B...>>;
-    using type = apply_t<inner, F>;
+    using inner = invoke<compose_impl<U, B...>>;
+    using type = apply<inner, F>;
   };
 
   template<typename U, typename F>
   struct compose_impl<U, F>
-  { using type = apply_t<U ,F>; };
+  { using type = apply<U ,F>; };
 
 public:
   template<typename U>
   struct apply
-  { using type = type_t<compose_impl<U, T...>>; };
+  { using type = invoke<compose_impl<U, T...>>; };
 };
 
 template<typename C, typename... T>
-struct count_if : std::integral_constant<int, (apply_t<T, C>::value + ...)> { };
+struct count_if : std::integral_constant<int, (apply<T, C>::value + ...)> { };
 
 } // namespace meta
 
@@ -66,7 +66,7 @@ struct is_placeholder<placeholder<I> > : std::true_type { };
 
 template<
   typename T,
-  typename U = meta::apply_t<
+  typename U = meta::apply<
                  T,
                  meta::compose<
                    meta::quote<std::remove_cv>,

@@ -20,14 +20,14 @@ template<class T>
 using decay_t = typename std::decay<T>::type;
 
 template<class Sig,class=void>
-struct is_invokable:std::false_type {};
+struct is_invokable : std::false_type {};
 template<class F, class... Ts>
 struct is_invokable<
   F(Ts...),
   void_t<decltype(std::declval<F>()(std::declval<Ts>()...))>
->:std::true_type {};
+> : std::true_type {};
 
-#define RETURNS(...) decltype(__VA_ARGS__){return (__VA_ARGS__);}
+#define RETURNS(...) decltype(__VA_ARGS__) { return (__VA_ARGS__); }
 
 template<class D>
 class rvalue_invoke_support {

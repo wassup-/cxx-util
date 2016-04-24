@@ -6,7 +6,7 @@
 namespace functional
 {
 
-#define AUTO_RETURNS(x) -> decltype(x) { return x; }
+#define AUTO_RETURNS(x) -> decltype(x) { return (x); }
 
 /*
  * foldl

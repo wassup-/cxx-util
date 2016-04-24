@@ -35,7 +35,7 @@ inline std::string bctostr(long bc, bool exact = true)
   using std::to_string;
 
   // in exact mode, if not a multiple of 1024, we assume count in bytes
-  if(exact && (bc % 1024) != 0) {
+  if(exact && ((bc % 1024) != 0)) {
     // bytes
     return to_string(bc) + "b";
   }
